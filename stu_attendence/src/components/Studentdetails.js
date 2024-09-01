@@ -5,7 +5,7 @@ const Studentdetails = () => {
 
   const fetchData = async (selectedYear) => {
     try {
-      const response = await fetch('http://localhost:8000/retDataYear', {
+      const response = await fetch('https://student-managment-crhv.onrender.com/retDataYear', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ year: selectedYear }),
