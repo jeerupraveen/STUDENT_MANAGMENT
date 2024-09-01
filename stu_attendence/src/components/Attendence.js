@@ -6,7 +6,7 @@ const Attendance = () => {
 
   const fetchDataByYear = async (selectedYear) => {
     try {
-      const response = await fetch('http://localhost:8000/AttDataYear', {
+      const response = await fetch('https://student-managment-crhv.onrender.com/AttDataYear', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ year: selectedYear })
