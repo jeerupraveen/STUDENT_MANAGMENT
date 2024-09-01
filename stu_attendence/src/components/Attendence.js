@@ -29,7 +29,7 @@ const Attendance = () => {
     student.Streak = (student.Streak || 0) + 1;
 
     try {
-      const response = await fetch('http://localhost:8000/attendinsert', {
+      const response = await fetch('https://student-managment-crhv.onrender.com/attendinsert', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
