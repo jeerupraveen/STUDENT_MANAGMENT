@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
+const URL1="http://localhost:8000"
+const URL2="https://student-managment-wine.vercel.app/AttDataYear"
+
 
 const Studentdetails = () => {
   const [data, setData] = useState([]);
-  const [year,setYear]=useState(null)
+  const [year,setYear]=useState('1')
   useEffect(()=>{
-    fetchData(year||"1")
+    fetchData(year)
   },[year])
 
   const fetchData = async (selectedYear) => {
     try {
-      const response = await fetch('https://student-managment-wine.vercel.app/retDataYear', {
+      const response = await fetch(`${URL2}/retDataYear`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ year: selectedYear }),

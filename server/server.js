@@ -107,15 +107,23 @@ app.post('/updateYear', async(req, res) => {
         res.status(500).json({ error: 'An error occurred', details: e });
     }
 });
-app.post('/delete',async(req,res)=>{
-    try{
-        const details= await db.collection('student').deleteOne({Email:req.body.email});
-        res.json(details)
+app.post('/delete', async (req, res) => {
+    console.log(req.body);
+    try {
+      const details = await db.collection('student').deleteOne({ RegisterNumber: req.body.registernumber });
+      const attendanceDetails = await db.collection('attendence').deleteOne({ RegisterNumber: req.body.registernumber });
+  
+      if (details.deletedCount > 0 && attendanceDetails.deletedCount > 0) {
+        res.json({ success: true, message: 'Deletion successful', details,attendanceDetails });
+      } else {
+        res.json({ success: false, message: 'No document found', details,attendanceDetails });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: 'An error occurred', error: err });
     }
-    catch(err){
-        console.log(err)
-    }
-})
+  });
+  
 app.post('/attendinsert',async(req,res)=>{
     try{
         const details=await db.collection('attendence').findOne({RegisterNumber: req.body.registernumber});

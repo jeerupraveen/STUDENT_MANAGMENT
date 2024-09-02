@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
+const URL1="http://localhost:8000"
+const URL2="https://student-managment-wine.vercel.app/AttDataYear"
 
 const Attendance = () => {
-  const [year, setYear] = useState(null);
+  const [year, setYear] = useState("1");
   const [students, setStudents] = useState([]);
   useEffect(()=>{
-    fetchDataByYear(year||"1")
+    fetchDataByYear(year)
   },[year])
   
   const fetchDataByYear = async (selectedYear) => {
     try {
-      const response = await fetch('https://student-managment-wine.vercel.app/AttDataYear', {
+      const response = await fetch(`${URL2}/AttDataYear`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ year: selectedYear })
@@ -32,7 +34,7 @@ const Attendance = () => {
     student.Streak = (student.Streak || 0) + 1;
 
     try {
-      const response = await fetch('https://student-managment-wine.vercel.app/attendinsert', {
+      const response = await fetch(`${URL2}/attendinsert`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -43,12 +45,38 @@ const Attendance = () => {
           streak: student.Streak,
         }),
       });
-      const data = await response.json();
+      await response.json();
       setStudents(updatedStudents);
     } catch (err) {
       console.log(err);
     }
   };
+  const handleDeleteClick = async (index) => {
+    const updatedStudents = [...students];
+    const student = updatedStudents[index];
+  
+    try {
+      const response = await fetch(`${URL2}/delete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          registernumber: student.RegisterNumber,
+        }),
+      });
+      const result = await response.json();
+      console.log('Delete Response:', result);
+  
+      if (result.success) {
+        updatedStudents.splice(index, 1);
+        setStudents(updatedStudents);
+      } else {
+        console.log('Failed to delete student');
+      }
+    } catch (err) {
+      console.log('Error:', err);
+    }
+  };
+  
 
   return (
     <div className="p-4">
@@ -75,6 +103,7 @@ const Attendance = () => {
               <th className="border border-gray-300 px-4 py-2">YEAR</th>
               <th className="border border-gray-300 px-4 py-2">STREAK</th>
               <th className="border border-gray-300 px-4 py-2">ATTEND</th>
+              <th className="border border-gray-300 px-4 py-2">DELETE</th>
             </tr>
           </thead>
           <tbody>
@@ -92,6 +121,14 @@ const Attendance = () => {
                     onClick={() => handleAttendClick(index)}
                   >
                     ATTEND
+                  </button>
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  <button
+                    className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 transition"
+                    onClick={() => handleDeleteClick(index)}
+                  >
+                    DELETE
                   </button>
                 </td>
               </tr>
