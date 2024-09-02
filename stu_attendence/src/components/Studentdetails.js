@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Studentdetails = () => {
   const [data, setData] = useState([]);
+  const [year,setYear]=useState(null)
+  useEffect(()=>{
+    fetchData(year||"1")
+  },[year])
 
   const fetchData = async (selectedYear) => {
     try {
@@ -18,7 +22,7 @@ const Studentdetails = () => {
   };
 
   const handleYearClick = (selectedYear) => {
-    console.log(selectedYear);
+    setYear(selectedYear);
     fetchData(selectedYear);
   };
 

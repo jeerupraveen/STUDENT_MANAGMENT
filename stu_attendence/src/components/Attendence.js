@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Attendance = () => {
   const [year, setYear] = useState(null);
   const [students, setStudents] = useState([]);
-
+  useEffect(()=>{
+    fetchDataByYear(year||"1")
+  },[year])
+  
   const fetchDataByYear = async (selectedYear) => {
     try {
       const response = await fetch('https://student-managment-wine.vercel.app/AttDataYear', {
@@ -19,7 +22,7 @@ const Attendance = () => {
   };
 
   const handleYearClick = (year) => {
-    // setYear(year);
+    setYear(year);
     fetchDataByYear(year);
   };
 
