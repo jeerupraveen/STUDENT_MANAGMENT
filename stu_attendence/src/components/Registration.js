@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+const URL1="http://localhost:8000"
+const URL2="https://student-managment-wine.vercel.app/AttDataYear"
 
 const Registration = () => {
     const [formData, setFormData] = useState({
@@ -19,14 +21,14 @@ const Registration = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://student-managment-wine.vercel.app/insertdata', {
+            const response = await fetch(`${URL2}/insertdata`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
             const data = await response.json();
             if (data) {
-                console.log(`Data inserted successfully: ${JSON.stringify(data)}`);
+                alert(`${data.message}`); 
             } else {
                 console.log("Error while inserting data");
             }
