@@ -82,7 +82,7 @@ app.post("/retDataYear", async (req, res) => {
 });
 app.post("/AttDataYear", async (req, res) => {
     try {
-        const details = await db.collection('attendence').find({ Year: req.body.year }).toArray();
+        const details = await db.collection('attendence').find({ Year: req.body.year||"1" }).toArray();
         res.json(details);
     } catch (error) {
         console.log("ERROR while retrieving entire data", error);

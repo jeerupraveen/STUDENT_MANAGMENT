@@ -9,7 +9,7 @@ const Attendance = () => {
       const response = await fetch('https://student-managment-wine.vercel.app/AttDataYear', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ year: selectedYear ||"1" })
+        body: JSON.stringify({ year: selectedYear })
       });
       const data = await response.json();
       setStudents(data);
