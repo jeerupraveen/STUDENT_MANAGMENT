@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 const URL1="http://localhost:8000"
-const URL2="https://student-managment-wine.vercel.app/AttDataYear"
+const URL2="https://student-managment-wine.vercel.app"
 
 const Registration = () => {
     const [formData, setFormData] = useState({
